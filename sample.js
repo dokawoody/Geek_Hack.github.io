@@ -8,6 +8,6 @@ $("#btn1").on("click", function()  {
   const article = document.getElementById('electric-cars');
   // jQueryを使って画面にメッセージを表示する
   $("#tBox").val(message);
-  $("#tBox1").val("12");
-  $("#tBox2").val("10");
+  $("#tBox1").val(article.dataset.columns);
+  $("#tBox2").val(article.dataset.indexNumber);
 });
