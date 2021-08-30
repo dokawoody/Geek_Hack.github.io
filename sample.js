@@ -9,5 +9,5 @@ $("#btn1").on("click", function()  {
   // jQueryを使って画面にメッセージを表示する
   $("#tBox").val(message);
   $("#tBox1").val(article.dataset.columns);
-  //$("#tBox2").val(article.dataset.indexNumber);
+  $("#tBox2").val(article.dataset.indexNumber);
 });
