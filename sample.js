@@ -7,7 +7,7 @@ $("#btn1").on("click", function()  {
   let message = `今日は${year}年${month}月${day}日です`
   const article = document.getElementById('electric-cars');
   // jQueryを使って画面にメッセージを表示する
-  $("#tBox").val(message);
-  $("#tBox1").val(article.dataset.columns,article.dataset.indexNumber);
-  $("#tBox2").val(article.dataset.indexNumber);
+  //$("#tBox").val(message);
+  const textbox = document.getElementById("tBox").value
+  $("#tBox1").val(textbox);
 });
