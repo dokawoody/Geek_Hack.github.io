@@ -1,0 +1,9 @@
+#back{
+    position: absolute;
+    content: "";
+    display: block;
+    background-color: red;
+    width: 100%;
+    height: 100%;
+    background-image: url('./mamimi_p_sr3.png');
+}
