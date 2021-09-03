@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <?php
 $fp = fopen('data.csv', 'a+b');
-if ($_SERVER['REQUEST_METHOD'] === 'POST') /**書き込みがあれば */
+if (!empty($_POST['title'])&&!empty($_POST['comment'])&&$_SERVER['REQUEST_METHOD'] === 'POST') /**書き込みがあれば */
 {
-    fputcsv($fp, [$_POST['name'], $_POST['comment']]);/**csvファイルに書き込む */
+    fputcsv($fp, [$_POST['title'], $_POST['comment']]);/**csvファイルに書き込む */
     rewind($fp);
 }
 while ($row = fgetcsv($fp)) {
@@ -33,14 +34,21 @@ fclose($fp);
 <section>
     <h2>新規投稿</h2>
     <form action="" method="post">
-        <div class="name"><span class="label">お名前:</span><input type="text" name="name" value=""></div>
-        <div class="honbun"><span class="label">本文:</span><textarea name="comment" cols="40" rows="40 wrap="hard" placeholder="質問内容を入力してください。"></textarea></div>
+        <div class="name"><span class="label">タイトル:</span><span class="required">必須</span><input type="text" name="title" value=""></div>
+        <?php if ($_POST['title'] == ''): ?>
+			<p><font color="red">* 質問内容を入力してください</font></p>
+		<?php endif; ?>
+        <div class="honbun"><span class="label">質問内容:</span><textarea name="comment" cols="40" rows="40 wrap="hard"></textarea></div>
+        <?php if ($_POST['comment'] == ''): ?>
+			<p><font color="red">* 質問内容を入力してください</font></p>
+		<?php endif; ?>
         <input type="submit" onclick="location.href='main.php'" style="position: absolute; left: 80%" value="質問する" class="situmon">
     </form>
 </section>
 </nav>
 </div>
 </center>
+
 
 </section>
 </body>
