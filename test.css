@@ -35,6 +35,11 @@ body{
   background    : #ffffff;     /* 文字色     */
 }
 
+#logo{
+    background-color:#008080;
+    color:#ffffff;
+}
+
 div#content {
     background-color: #6666ff;
     width: 1170px;
@@ -51,4 +56,18 @@ nav {
     background-color: #6666ff;
     width: 584px;
     float: left;
+}
+
+input.situmon{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.error{
+    color: red;
+}
+
+ul{
+    list-style: none;
 }
