@@ -8,18 +8,26 @@
         $members->execute(array($_SESSION['id']));
         $member = $members->fetch();
         if(!empty($_POST)){
-            $posts = $db->prepare('INSERT INTO posts SET created_by=?, title=?, message=?, created=NOW()');
-            $posts->execute(array(
-                $_SESSION['id'],
-                $_POST['title'],
-                $_POST['comment']
-            ));
+            if($_POST['title'] == ''){
+                $error['title'] = 'blank';
+            }
+            if($_POST['comment'] == ''){
+                $error['comment'] = 'blank';
+            }
+            if(!isset($error)){
+                $posts = $db->prepare('INSERT INTO posts SET created_by=?, title=?, message=?, created=NOW()');
+                $posts->execute(array(
+                    $_SESSION['id'],
+                    $_POST['title'],
+                    $_POST['comment']
+                ));
 
-            $url = 'http://127.0.0.1/Geek_Hack.github.io/template.php';
-            $message_id = $db->lastInsertId();
-            createHTML($url, $message_id);
+                $url = 'http://noobs.php.xdomain.jp/template.php';
+                $message_id = $db->lastInsertId();
+                createHTML($url, $message_id);
 
-            exit(header('Location: main'));
+                exit(header('Location: main'));
+            }
         }
     }else{
         unset($_SESSION);
@@ -29,7 +37,7 @@
 function createHTML($template_url, $message_id): bool{
     $url = $template_url.'?message_id='.$message_id;
     $data = curl_get_contents($url);
-    $path = './questions/'.$message_id.'.html';
+    $path = './questions/'.$message_id;
     $fhandle = fopen($path, "w");
     fwrite($fhandle, $data);
     fclose($fhandle);
@@ -77,8 +85,14 @@ function curl_get_contents($url)
                         <h2>新規投稿</h2>
                         <form action="" method="post">
                             <input name="title" type="text" placeholder="質問したいことを簡潔に書いてください">
+                            <?php if(isset($error['title']) && ($error['title'] == 'blank')): ?>
+                                <div class="error">タイトルを入力してください</div>
+                            <?php endif; ?>
                             <!--<div class="name"><span class="label">お名前:</span><input type="text" name="name" value=""></div>-->
                             <div class="honbun"><span class="label">本文:</span><textarea name="comment" cols="40" rows="40" wrap="hard" placeholder="質問内容を入力してください。"></textarea></div>
+                            <?php if(isset($error['comment']) && ($error['comment'] == 'blank')): ?>
+                                <div class="error">本文を入力してください</div>
+                            <?php endif; ?>
                             <input type="submit" style="position: absolute; left: 80%" value="質問する" class="situmon">
                         </form>
                     </section>

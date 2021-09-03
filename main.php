@@ -15,6 +15,7 @@
 
     $posts = $db->query('SELECT m.name, p.* FROM members m, posts p WHERE m.id=p.created_by ORDER BY p.created DESC');
 
+    //console_log($posts);
     /*
     $fp = fopen('data.csv', 'a+b');
     if ($_SERVER['REQUEST_METHOD'] === 'POST') /**書き込みがあれば */
@@ -46,7 +47,7 @@
         <section class="toukou">
             <h2>投稿一覧</h2>
             
-            <?php if (!empty($posts)): ?>
+            <?php if ($posts->rowCount() > 0): ?>
                 <ul>
                     <?php foreach($posts as $post): ?>
                         <li>
@@ -55,7 +56,6 @@
                                 <?=nl2br(htmlspecialchars($post['title'], ENT_QUOTES));?>
                             </a>
                         </li>
-                        <?php console_log($post); ?>
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>質問するよ</title>
+    </head>
+    <body>
+        <h1>タイトル</h1>
+        <h1>質問するよ</h1>
+        <p>本文</p>
+        <p>
+            質問したよ        </p>
+    </body>
+</html>
