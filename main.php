@@ -50,8 +50,10 @@
                 <ul>
                     <?php foreach($posts as $post): ?>
                         <li>
-                            <?=htmlspecialchars($post['name'], ENT_QUOTES);?> : 
-                            <?=nl2br(htmlspecialchars($post['message'], ENT_QUOTES));?>
+                            <a href="./questions/<?=$post['message_id']?>">
+                                <?=htmlspecialchars($post['name'], ENT_QUOTES);?> : 
+                                <?=nl2br(htmlspecialchars($post['title'], ENT_QUOTES));?>
+                            </a>
                         </li>
                         <?php console_log($post); ?>
                     <?php endforeach; ?>
