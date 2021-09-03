@@ -19,5 +19,6 @@
         <p>
             <?=$post['message']?>
         </p>
+        <button>読みやすいね</button>
     </body>
 </html>
