@@ -61,7 +61,7 @@
     </head>
     <body>
         <header id = "hea">
-            <h href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></h>
+            <a href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></a>
         </header>
 
         <input type="submit" class="situmon" onclick="location.href='Question'" value="質問投稿">

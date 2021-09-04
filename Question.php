@@ -117,7 +117,7 @@ function curl_get_contents($url)
     </head>            
     <body>
         <header id = "hea">
-            <h href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></h>
+            <a href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></a>
         </header>
         </header>
         <div class="container flex-box">

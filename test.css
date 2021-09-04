@@ -152,7 +152,7 @@ textarea{
     border: solid;
 }
 
-h {
+header>a {
     /*background-color: #2ddf68;*/
     background-image: url(./chick_sprout.png);
     background-repeat: repeat;
@@ -175,6 +175,16 @@ h {
 #hea {
     position:fixed;
 }
+
+#hea>a{
+    color: black;
+    text-decoration: none;
+}
+
+#hea>a:visited, #hea>a:hover{
+    color: black;
+}
+
 .base {
     background-color: #eeeeee;
     position: absolute;
