@@ -116,9 +116,9 @@ function curl_get_contents($url)
         <title>初心者エンジニアに優しい質問サイト</title>
     </head>            
     <body>
-        <header class="h">
-            <img src="chick sprout.png" width="50" height="50">
-            <h1>headerです</h1>
+        <header id = "hea">
+            <h href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></h>
+        </header>
         </header>
         <div class="container flex-box">
             <div class="flex-item" id="question">
