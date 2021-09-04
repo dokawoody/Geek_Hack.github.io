@@ -65,7 +65,7 @@
             <p><?=htmlspecialchars($member['name'], ENT_QUOTES);?></p><!--ログイン名-->
         </header>
 
-        <input type="submit" class="situmon" onclick="location.href='Post'" value="質問投稿">
+        <input type="submit" class="situmon" onclick="location.href='Question'" value="質問投稿">
 
         <section class="toukou">
             <h2>投稿一覧</h2>

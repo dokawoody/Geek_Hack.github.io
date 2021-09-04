@@ -43,7 +43,7 @@
                 $message_id = $db->lastInsertId();
                 createHTML($url, $message_id);
 
-                exit(header('Location: main'));
+                echo '<script>top.location.href = "main";</script>';
             }
         }
     }else{
@@ -96,6 +96,7 @@ function curl_get_contents($url)
                 let winWidth = window.innerWidth;
                 let winHeight = window.innerHeight;
 
+
                 line.mousedown((e)=>{
                     isDown = true;
                 });
@@ -115,11 +116,15 @@ function curl_get_contents($url)
         <title>初心者エンジニアに優しい質問サイト</title>
     </head>            
     <body>
+        <header class="h">
+            <img src="chick sprout.png" width="50" height="50">
+            <h1>headerです</h1>
+        </header>
         <div class="container flex-box">
             <div class="flex-item" id="question">
                 <nav>
                     <section>
-                        <a class="" href="main" target="_top">戻る</a>
+                        <a class="backBtn" href="main" target="_top">戻る</a>
                         <h2>新規投稿</h2>
                         <form action="" method="post" enctype="multipart/form-data">
                             <dt>ニックネーム：<?=htmlspecialchars($member['name'], ENT_QUOTES);?></dt>
@@ -168,14 +173,14 @@ function curl_get_contents($url)
         </div>
 
         <script>
-        function previewImage(obj)
-        {
-            var fileReader = new FileReader();
-            fileReader.onload = (function() {
-                document.getElementById('preview').src = fileReader.result;
-            });
-            fileReader.readAsDataURL(obj.files[0]);
-        }
+            function previewImage(obj)
+            {
+                var fileReader = new FileReader();
+                fileReader.onload = (function() {
+                    document.getElementById('preview').src = fileReader.result;
+                });
+                fileReader.readAsDataURL(obj.files[0]);
+            }
         </script>
 
     </body>
