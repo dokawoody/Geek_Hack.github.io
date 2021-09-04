@@ -5,6 +5,9 @@
     $posts = $db->prepare('SELECT * FROM posts WHERE message_id=?');
     $posts->execute(array($_GET['message_id']));
     $post = $posts->fetch();
+
+    $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
+    $host = $_SERVER['HTTP_HOST'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +19,7 @@
         <script>
             $(()=>{
                 $('#yyBtn').on('click', ()=>{
-                    executePHP('http://<?=$_SERVER["HTTP_HOST"]?>/yyInc.php');
+                    executePHP(<?=$protocol.'//'.$host.'/yyInc.php'?>);
                 });
 
                 function executePHP(url){
@@ -48,7 +51,7 @@
                 <i class="material-icons">thumb_up_off_alt</i>
                 読みやすいね
             </button>
-            <a href="<?='http://'.$_SERVER['HTTP_HOST'].'/main'?>">TOPへ</a>
+            <a href="<?=$protocol.'//'.$host.'/main'?>">TOPへ</a>
         </div>
     </body>
 </html>

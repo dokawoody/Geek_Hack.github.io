@@ -2,12 +2,15 @@
     session_start();
     require('dbconnect.php');
 
+    
+
     if(isset($_SESSION['id']) && ($_SESSION['time'] + 3600) > time()){
         $_SESSION['time'] = time();
         $members = $db->prepare('SELECT * FROM members WHERE id=?');
         $members->execute(array($_SESSION['id']));
         $member = $members->fetch();
         if(!empty($_POST)){
+            
             if($_POST['title'] == ''){
                 $error['title'] = 'blank';
             }
@@ -15,12 +18,25 @@
                 $error['comment'] = 'blank';
             }
             if(!isset($error)){
+                $up_file  = "";//初期化
+                $up_ok = false;
+                $tmp_file = isset($_FILES["pic"]["tmp_name"]) ? $_FILES["pic"]["tmp_name"] : "";//保存先相対パス
+                $org_file = isset($_FILES["pic"]["name"])     ? $_FILES["pic"]["name"]     : "";//元ファイル名
+                $file_err = $_FILES["pic"]["error"];
+                if( $tmp_file != "" &&
+                is_uploaded_file($tmp_file) ){
+                    $split = explode('.', $org_file); $ext = end($split);
+                    if( $ext != "" && $ext != $org_file  ){
+                    $up_file = "images/". date("Ymd_His.") . mt_rand(1000,9999) . ".$ext";//ファイル名日付＋乱数
+                    $up_ok = move_uploaded_file( $tmp_file, $up_file);//imagesフォルダに保存
+                    }
+                }
+
                 $posts = $db->prepare('INSERT INTO posts SET created_by=?, title=?, message=?, created=NOW()');
                 $posts->execute(array(
                     $_SESSION['id'],
                     $_POST['title'],
                     $_POST['comment']
-                    //$_POST['pic']
                 ));
 
                 $url = 'http://noobs.php.xdomain.jp/template.php';
@@ -63,6 +79,7 @@ function curl_get_contents($url)
 
     return $data;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -102,11 +119,11 @@ function curl_get_contents($url)
             <div class="flex-item" id="question">
                 <nav>
                     <section>
-                        <a class="" href="main">戻る</a>
+                        <a class="" href="main" target="_top">戻る</a>
                         <h2>新規投稿</h2>
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <dt>ニックネーム：<?=htmlspecialchars($member['name'], ENT_QUOTES);?></dt>
-                            <dt>タイトル：<input name="title" type="text" placeholder="質問したいことを簡潔に書いてください"></dt>
+                            <dt>タイトル：<input name="title" type="search" placeholder="質問したいことを簡潔に書いてください"></dt>
                             <?php if(isset($error['title']) && ($error['title'] == 'blank')): ?>
                                 <div class="error">タイトルを入力してください</div>
                             <?php endif; ?>
@@ -115,8 +132,20 @@ function curl_get_contents($url)
                                 <div class="error">本文を入力してください</div>
                             <?php endif; ?>
                             <label for="image">画像ファイル:</label><br>
-                            <input type="file" accept="image/*" name="pic">
+                            <div class="file-up">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+                                <input type="file" accept="image/*" name="pic" onchange="previewImage(this);">
+                            </div>
                             <input type="submit" style="position: absolute; right: 10%" value="質問する" class="situmon">
+                            <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:200px;"> 
+                            <p>
+                                <?php if( isset($file_err) && ($file_err != 2) ): ?>
+                                <?php else: ?>
+                                    ファイルサイズは2MB未満にしてください。
+                                <?php endif; ?>
+                            </p>
+                        
+                        
                         </form>
                     </section>
                 </nav>
@@ -137,5 +166,17 @@ function curl_get_contents($url)
 
                 </div>
         </div>
+
+        <script>
+        function previewImage(obj)
+        {
+            var fileReader = new FileReader();
+            fileReader.onload = (function() {
+                document.getElementById('preview').src = fileReader.result;
+            });
+            fileReader.readAsDataURL(obj.files[0]);
+        }
+        </script>
+
     </body>
 </html>

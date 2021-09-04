@@ -1,0 +1,25 @@
+<?php
+?>
+
+<!DOCTYPE html>
+<html>
+<body>
+<form>
+<input type="file" accept='image/*' onchange="previewImage(this);">
+</form>
+<p>
+Preview:<br>
+<img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:200px;">
+</p>
+<script>
+function previewImage(obj)
+{
+	var fileReader = new FileReader();
+	fileReader.onload = (function() {
+		document.getElementById('preview').src = fileReader.result;
+	});
+	fileReader.readAsDataURL(obj.files[0]);
+}
+</script>
+</body>
+</html>
