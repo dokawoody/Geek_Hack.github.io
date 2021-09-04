@@ -14,7 +14,7 @@
     }
 
     $posts = $db->query('SELECT m.name, p.* FROM members m, posts p WHERE m.id=p.created_by ORDER BY p.created DESC');//値がすでに決まってる
-    
+
     function convert_to_fuzzy_time($time_db){
         $unix   = strtotime($time_db);
         $now    = time();
@@ -49,8 +49,6 @@
     
         return (int)$time .$unit;
     }
-
-    $fuzzy_time=convert_to_fuzzy_time($post['created']);
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +65,7 @@
             <p><?=htmlspecialchars($member['name'], ENT_QUOTES);?></p><!--ログイン名-->
         </header>
 
-        <input type="submit" class="situmon" onclick="location.href='Post'" value="質問投稿">
+        <input type="submit" class="situmon" onclick="location.href='Question'" value="質問投稿">
 
         <section class="toukou">
             <h2>投稿一覧</h2>
@@ -76,10 +74,13 @@
                     <?php foreach($posts as $post): ?>
                         <li class="post">
                             <a href="./questions/<?=$post['message_id']?>">
-                                <p class=taitoru> 
-                                <?=nl2br(htmlspecialchars($post['title'], ENT_QUOTES));?></p>
-                                <p class="Contributor"><?=htmlspecialchars($member['name'], ENT_QUOTES);?>  <?=htmlspecialchars($post['created']);?></p>
-                                
+                                <p class=title> 
+                                    <?=nl2br(htmlspecialchars($post['title'], ENT_QUOTES));?>
+                                </p>
+                                <p class="Contributor">
+                                    <?=htmlspecialchars($post['name'], ENT_QUOTES);?>  
+                                    <?=htmlspecialchars(convert_to_fuzzy_time($post['created']));?>
+                                </p>
                             </a>
                         </li>
                     <?php endforeach; ?>
