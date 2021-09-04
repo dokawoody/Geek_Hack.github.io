@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+        <title></title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            $('yyBtn').on('click', ()=>{
+                executePHP('noobs.php.xdomain.jp/yyInc.php');
+            });
+
+            function executePHP(url){
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        'action': 'count_up',
+                        'message_id': 4},
+                    success: (content) => {
+                        console.log('php success');
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+<script type="text/javascript" src="https://ad.xdomain.ne.jp/js/server-php.js"></script>
+        <a><i class="material-icons">edit</i></a>
+        <h1>タイトル</h1>
+        <h1></h1>
+        <p>本文</p>
+        <p>
+                    </p>
+        <button id="yyBtn">読みやすいね</button>
+    </body>
+</html>
