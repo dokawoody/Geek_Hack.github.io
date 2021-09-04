@@ -1,13 +1,20 @@
+
+<!DOCTYPE html>
 <HTML>
   <HEAD>
-    <title>初心者エンジニアに優しい質問サイト</title>
+    <link rel="stylesheet" type="text/css" href="test.css">
+    <title>初心者エンジニアに優しい質問サイト Chick Supprout</title>
   </HEAD>
-  <FRAMESET ROWS="100,*">
-    <FRAME SRC="head.html" NAME="head">
-    <FRAMESET COLS="750,*">
-      <FRAME SRC="Question.php" NAME="Question">
-      <FRAME SRC="high eva.php" NAME="eva">
-    </FRAMESET>
-  </FRAMESET>
-  top.location.href = "main.php";
+  <body>
+    <header class="h">
+      <img src="chick sprout.png" width="50" height="50">
+      <h1>headerです</h1>
+    </header>
+    <a href="main">戻る</a>
+    <div class="base">
+      <iframe src="Question.php" width="60%" height="100%"></iframe>
+      <iframe src="high eva.php" width="40%" height="100%"></iframe>
+    </div>
+    <?php /*top.location.href = "main.php";*/ ?>
+  </body>
 </HTML>
