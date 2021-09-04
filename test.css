@@ -1,5 +1,11 @@
+html{
+    padding: 0;
+    margin: 0;
+}
+
 body{
-    text-align:center;
+    padding: 0;
+    margin: 0;
     font-family: Quicksand, 游ゴシック体, YuGothic, 'ヒラギノ角ゴシック Pro',メイリオ, Meiryo,'ＭＳ Ｐゴシック', sans-serif;
 }
 .honbun {
@@ -29,26 +35,134 @@ body{
   box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
   border        : 2px solid #000066;    /* 枠の指定 */
 }
+
 .situmon:hover {
   box-shadow    : none;        /* カーソル時の影消去 */
   color         : #000066;     /* 背景色     */
   background    : #ffffff;     /* 文字色     */
 }
-
-div#content {
-    background-color: #6666ff;
-    width: 1170px;
-    overflow: hidden;
-}
-    
-div#right {
-    background-color: #ffffff;
-    width: 584px;
-    float: right;
-}
     
 nav {
-    background-color: #6666ff;
     width: 584px;
     float: left;
+}
+
+input.situmon{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.error{
+    color: red;
+}
+
+ul{
+    list-style: none;
+}
+
+.post{
+    margin: 0;
+    padding: 0;
+}
+
+.post a{
+    color: black;
+    margin: 5px;
+    padding: 5px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #D4ECDD;
+    text-decoration: none;
+    transition: all 300ms 0s ease;
+}
+
+.post a:visited{
+    color: black;
+}
+
+.post a:hover{
+    width: 110%;
+    background-color: #ccc;
+}
+
+.logo {
+    overflow: hidden;
+    transform: translate(-100%, 0);
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+    color: #aa8f7b;
+    font-family: 'Josefin Sans', sans-serif;
+}  
+.logo span {
+    display: block;
+    transform: translate(100%, 0);
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+}
+  
+.logo.-visible,
+.logo.-visible span {
+    transform: translate(0, 0);
+}
+
+.flex-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.flex-item{
+    height: 100vh;
+    display: block;
+}
+
+#line{
+    position: absolute;
+    display: block;
+    background-color: black;
+    width: 5px;
+    height: 100vh;
+    top: 0;
+    left: 50vw;
+}
+
+#line:hover{
+    cursor: col-resize;
+}
+
+textarea{
+    box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, .5);
+}
+
+.question-title{
+    border: solid;
+}
+
+.question-body{
+    border: solid;
+}
+
+.h{
+    /*position: fixed;*/
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+    vertical-align: middle;
+    background    : #339c56;     /* 背景色     */
+    top:0;
+    left:0;
+    right:0;
+
+}
+.base {
+    background-color: #eeeeee;
+    position: absolute;
+    top:100;
+    left:0;
+    right:0;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    float : left;
 }
