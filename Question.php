@@ -20,6 +20,7 @@
                     $_SESSION['id'],
                     $_POST['title'],
                     $_POST['comment']
+                    //$_POST['pic']
                 ));
 
                 $url = 'http://noobs.php.xdomain.jp/template.php';
@@ -33,6 +34,10 @@
         unset($_SESSION);
         exit(header('Location: login'));
     }
+
+    // 読みやすい投稿を取得
+    $posts = $db->prepare('SELECT * FROM posts ORDER BY yomiyasuine DESC');
+    $posts->execute();
 
 function createHTML($template_url, $message_id): bool{
     $url = $template_url.'?message_id='.$message_id;
@@ -65,39 +70,72 @@ function curl_get_contents($url)
     <head>
         <meta charset="UTF-8">
         <link href="test.css" rel="stylesheet" type="text/css" media="all">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(()=>{
+                let line = $('#line');
+                let question = $('#question');
+                let isDown = false;
+                let winWidth = window.innerWidth;
+                let winHeight = window.innerHeight;
+
+                line.mousedown((e)=>{
+                    isDown = true;
+                });
+
+                line.mouseup((e)=>{
+                    isDown = false;
+                });
+
+                $(window).mousemove((e)=>{
+                    if(isDown){
+                        line.css({'left': e.clientX});
+                        question.css({'width': (e.clientX / winWidth) + 'vw'});
+                    }
+                });
+            });
+        </script>
         <title>初心者エンジニアに優しい質問サイト</title>
-    </head>
+    </head>            
     <body>
-        <header>
-            <h1 id="logo">初心者エンジニアに優しい質問サイト</h1>
-        </header>
-        <center>
-            <div id="content">
-                <a href="main">戻る</a>
-
-                <div id="right">
-                    <h2>評価の高い質問</h2>
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                </div>
-
+        <div class="container flex-box">
+            <div class="flex-item" id="question">
                 <nav>
                     <section>
+                        <a class="" href="main">戻る</a>
                         <h2>新規投稿</h2>
                         <form action="" method="post">
-                            <input name="title" type="text" placeholder="質問したいことを簡潔に書いてください">
+                            <dt>ニックネーム：<?=htmlspecialchars($member['name'], ENT_QUOTES);?></dt>
+                            <dt>タイトル：<input name="title" type="text" placeholder="質問したいことを簡潔に書いてください"></dt>
                             <?php if(isset($error['title']) && ($error['title'] == 'blank')): ?>
                                 <div class="error">タイトルを入力してください</div>
                             <?php endif; ?>
-                            <!--<div class="name"><span class="label">お名前:</span><input type="text" name="name" value=""></div>-->
                             <div class="honbun"><span class="label">本文:</span><textarea name="comment" cols="40" rows="40" wrap="hard" placeholder="質問内容を入力してください。"></textarea></div>
                             <?php if(isset($error['comment']) && ($error['comment'] == 'blank')): ?>
                                 <div class="error">本文を入力してください</div>
                             <?php endif; ?>
-                            <input type="submit" style="position: absolute; left: 80%" value="質問する" class="situmon">
+                            <label for="image">画像ファイル:</label><br>
+                            <input type="file" accept="image/*" name="pic">
+                            <input type="submit" style="position: absolute; right: 10%" value="質問する" class="situmon">
                         </form>
                     </section>
                 </nav>
             </div>
-        </center>
+            <div class="flex-item">
+                <h2>評価の高い質問</h2>
+                <?php if($posts->rowCount() > 0): ?>
+                    <ul>
+                    <?php foreach($posts as $post): ?>
+                        <li class="post">
+                            <a href="http://<?=$_SERVER['HTTP_HOST']?>/questions/<?=$post['message_id']?>">
+                                <?=$post['title']?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
+                </div>
+        </div>
     </body>
 </html>
