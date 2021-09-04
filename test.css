@@ -87,13 +87,22 @@ ul{
     background-color: #ccc;
 }
 
-.logo {
+/*.logo {
     overflow: hidden;
     transform: translate(-100%, 0);
     transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
     color: #aa8f7b;
     font-family: 'Josefin Sans', sans-serif;
-}
+}*/
+.logo{
+    background-color:#eeff00;
+    color:#000000;
+    text-align:center;
+    width: 100%;
+    height: 50px;
+    border-top        : 5px solid #006611;
+    border-bottom        : 5px solid #006611;
+} 
 .logo span {
     /*display: block;*/
     transform: translate(100%, 0);
@@ -143,17 +152,28 @@ textarea{
     border: solid;
 }
 
-.h{
-    /*position: fixed;*/
+h {
+    /*background-color: #2ddf68;*/
+    background-image: url(./chick_sprout.png);
+    background-repeat: repeat;
+    background-position: 0px 50px;
+    width: 100%;
+    height: 112px;
+    clear: both;
+    position: fixed;
     margin: 0;
-    padding: 0;
-    z-index: 100;
-    vertical-align: middle;
-    background    : #339c56;     /* 背景色     */
-    top:0;
-    left:0;
-    right:0;
-
+    z-index: 1;
+    top: 0;
+    left: 0;
+    border-bottom        : 5px solid #006611;
+    animation: bgiLoop 10s linear infinite;
+}
+@keyframes bgiLoop {
+    0% { background-position: 0 0;}
+  100% { background-position: -100px 200px;}
+}
+#hea {
+    position:fixed;
 }
 .base {
     background-color: #eeeeee;
@@ -190,4 +210,7 @@ textarea{
 .container{
     width: 80%;
     margin: 0 auto;
+}
+.boxwidth{
+    width: 100%;
 }
