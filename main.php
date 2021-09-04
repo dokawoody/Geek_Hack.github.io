@@ -62,9 +62,9 @@
     <body>
         <header id = "hea">
             <a href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></a>
+            <input type="submit" class="situmon" onclick="location.href='Question'" value="質問投稿">
         </header>
 
-        <input type="submit" class="situmon" onclick="location.href='Question'" value="質問投稿">
 
         <section class="toukou">
             <h2>投稿一覧</h2>
