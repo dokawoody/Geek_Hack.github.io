@@ -60,8 +60,8 @@
         <title>初心者エンジニアに優しい質問サイト</title> 
     </head>
     <body>
-        <header>
-            <a href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></a>
+        <header class="h">
+            <a href="main"><h1><span>初心者エンジニアに優しい質問サイト</span></h1></a>
             <p><?=htmlspecialchars($member['name'], ENT_QUOTES);?></p><!--ログイン名-->
         </header>
 

@@ -161,7 +161,7 @@ function curl_get_contents($url)
                     <ul>
                     <?php foreach($posts as $post): ?>
                         <li class="post">
-                            <a href="http://<?=$_SERVER['HTTP_HOST']?>/questions/<?=$post['message_id']?>">
+                            <a href="">
                                 <?=$post['title']?>
                             </a>
                         </li>
