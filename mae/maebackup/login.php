@@ -24,30 +24,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <link href="test.css" rel="stylesheet" type="text/css">
-        <script src="title.js" type="text/javascript"></script>
         <title>ログイン</title>
     </head>
     <body>
-        <header id = "hea">
-            <a href="main"><h1 class="logo"><span>初心者エンジニアに優しい質問サイト</span></h1></a>
-        </header>
         <form action="" method="post">
-        <div id = bor>
             <p class="error">
                 <?php if(isset($error['login'])): ?>
                     <?php if($error['login'] == 'blank'): ?>
-                        必要な情報が入力されていません
+                        パスワードかメールアドレスを入力してください
                     <?php elseif($error['login'] == 'faild'): ?>
                         パスワードかメールアドレスが間違っています
                     <?php endif; ?>
                 <?php endif; ?>
             </p>
-            <p class = tyuou>　メール　<input type="text" name="email"></p>
-            <p class = tyuou>パスワード<input type="password" name="password"></p>
-            <p class = tyuou><input type="submit" value="ログイン"> <a href="registration.php">登録はこちら</a></p>
-        </div>
+            <p>メール<input type="text" name="email"></p>
+            <p>パスワード<input type="password" name="password"></p>
+            <input type="submit" value="ログイン">
         </form>
     </body>
 </html>

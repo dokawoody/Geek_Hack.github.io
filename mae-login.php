@@ -25,7 +25,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <link href="test.css" rel="stylesheet" type="text/css">
+        <link href="mae-test.css" rel="stylesheet" type="text/css">
         <script src="title.js" type="text/javascript"></script>
         <title>ログイン</title>
     </head>

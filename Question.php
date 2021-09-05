@@ -2,8 +2,6 @@
     session_start();
     require('dbconnect.php');
 
-    
-
     if(isset($_SESSION['id']) && ($_SESSION['time'] + 3600) > time()){
         $_SESSION['time'] = time();
         $members = $db->prepare('SELECT * FROM members WHERE id=?');
@@ -32,11 +30,12 @@
                     }
                 }
 
-                $posts = $db->prepare('INSERT INTO posts SET created_by=?, title=?, message=?, created=NOW()');
+                $posts = $db->prepare('INSERT INTO posts SET created_by=?, title=?, message=?, picture=?,created=NOW()');
                 $posts->execute(array(
                     $_SESSION['id'],
                     $_POST['title'],
-                    $_POST['comment']
+                    $_POST['comment'],
+                    $member['picture']
                 ));
 
                 $url = 'http://noobs.php.xdomain.jp/template.php';
@@ -55,30 +54,7 @@
     $posts = $db->prepare('SELECT * FROM posts ORDER BY yomiyasuine DESC');
     $posts->execute();
 
-function createHTML($template_url, $message_id): bool{
-    $url = $template_url.'?message_id='.$message_id;
-    $data = curl_get_contents($url);
-    $path = './questions/'.$message_id;
-    $fhandle = fopen($path, "w");
-    fwrite($fhandle, $data);
-    fclose($fhandle);
-
-    return true;
-}
-
-function curl_get_contents($url)
-{
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    $data = curl_exec($ch);
-    curl_close($ch);
-
-    return $data;
-}
+$i=0;
 
 ?>
 
@@ -87,6 +63,26 @@ function curl_get_contents($url)
     <head>
         <meta charset="UTF-8">
         <link href="test.css" rel="stylesheet" type="text/css" media="all">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+        <script type="text/javascript">
+        function docOpen(argNo){
+        // --------------------------------------------------------------
+        //  文書の開閉
+        // --------------------------------------------------------------
+        var wArea = document.getElementById("area"+argNo);   // 全体の枠
+        var wCheck= document.getElementById("ck"+argNo);     // チェックボックス
+        var wDoc  = document.getElementById("doc"+argNo);    // 文書のエリア
+        
+        if(wCheck.checked){
+            // 全体枠高さを文書エリアの高さ＋ボタン高さにする
+            wArea.style.height = parseInt(wDoc.clientHeight + 40)+"px";
+        }else{
+            wArea.style.height = "";
+        }
+        }
+
+        </script>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script type="text/javascript">
             $(()=>{
@@ -124,15 +120,17 @@ function curl_get_contents($url)
             <div class="flex-item" id="question">
                 <nav>
                     <section>
-                        <a class="backBtn" href="main" target="_top">戻る</a>
+                        <!--<a class="backBtn" href="main" target="_top">戻る</a>-->
+                        <div class="line-left"> 
                         <h2>新規投稿</h2>
+                        </div>
                         <form action="" method="post" enctype="multipart/form-data">
                             <dt>ニックネーム：<?=htmlspecialchars($member['name'], ENT_QUOTES);?></dt>
-                            <dt>タイトル：<input name="title" type="search" placeholder="質問したいことを簡潔に書いてください"></dt>
+                            <dt>タイトル：<input name="title" type="search" size=50 placeholder="質問したいことを簡潔に書いてください"></dt>
                             <?php if(isset($error['title']) && ($error['title'] == 'blank')): ?>
                                 <div class="error">タイトルを入力してください</div>
                             <?php endif; ?>
-                            <div class="honbun"><span class="label">本文:</span><textarea name="comment" cols="40" rows="40" wrap="hard" placeholder="質問内容を入力してください。"></textarea></div>
+                            <div class="honbun"><span class="label">本文:</span><textarea name="comment" cols="55" rows="40" wrap="hard" placeholder="質問内容を入力してください。"></textarea></div>
                             <?php if(isset($error['comment']) && ($error['comment'] == 'blank')): ?>
                                 <div class="error">本文を入力してください</div>
                             <?php endif; ?>
@@ -141,7 +139,7 @@ function curl_get_contents($url)
                                 <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
                                 <input type="file" accept="image/*" name="pic" onchange="previewImage(this);">
                             </div>
-                            <input type="submit" style="position: absolute; right: 10%" value="質問する" class="situmon">
+                            <input type="submit" value="質問する" class="situmon">
                             <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:200px;"> 
                             <p>
                                 <?php if( isset($file_err) && ($file_err != 2) ): ?>
@@ -149,27 +147,44 @@ function curl_get_contents($url)
                                     ファイルサイズは2MB未満にしてください。
                                 <?php endif; ?>
                             </p>
-                        
-                        
                         </form>
                     </section>
                 </nav>
             </div>
-            <div class="flex-item">
-                <h2>評価の高い質問</h2>
-                <?php if($posts->rowCount() > 0): ?>
-                    <ul>
-                    <?php foreach($posts as $post): ?>
-                        <li class="post">
-                            <a href="">
-                                <?=$post['title']?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
 
-                </div>
+            <div class="flex-item">
+            <div class="line-left"> 
+            <h2>評価の高い質問</h2>
+            </div>
+            
+            <?php foreach($posts as $post): ?>
+                <?php $counter++;?>
+                <?php if($counter>3): ?>
+                    <?php break; ?>
+                <?php endif; ?>
+            <div class="nextReadBox" id="area<?=$counter?>">
+                <input type="checkbox" id="ck<?=$counter?>" onclick="docOpen('<?=$counter?>')">
+                <label for="ck<?=$counter?>"></label>
+                    <div id="doc<?=$counter?>">
+                        <?php if($posts->rowCount() > 0): ?>
+                            <ul>
+                                <li>
+                                        <p>
+                                            <img src='http://noobs.php.xdomain.jp/iine/iine<?=$counter?>.png'></img><h3><?=$post['yomiyasuine']?></h3>
+                                        </p>
+                                        <h3><?=$post['title']?></h3>
+                                        本文：
+                                        <a><?=$post['message']?></a>
+                                        <div class='btn'>
+                                        <a href='http://noobs.php.xdomain.jp/questions/<?=$post['message_id']?>'>スレッドへ</a>
+                                        </div>
+                                </li>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
+            </div>
+            <?php endforeach; ?>
+            </div>
         </div>
 
         <script>

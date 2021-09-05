@@ -6,6 +6,9 @@
     $posts->execute(array($_GET['message_id']));
     $post = $posts->fetch();
 
+    $answers = $db->prepare('SELECT m.name, m.picture, a.* FROM members m, answers a WHERE m.id=a.created_by AND a.question_id=? ORDER BY a.created DESC');
+    $answers->execute(array($_GET['message_id']));
+
     $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
     $host = $_SERVER['HTTP_HOST'];
 ?>
@@ -20,22 +23,37 @@
         <script>
             $(()=>{
                 $('#yyBtn').on('click', ()=>{
-                    executePHP(<?=$protocol.$host.'/yyInc.php'?>);
-                });
-
-                function executePHP(url){
+                    let url = '<?=$protocol.$host."/yyInc.php"?>';
+                    let json = {
+                            'action': 'count_up',
+                            'message_id': <?=$_GET['message_id']?>
+                        };
                     $.ajax({
                         url: url,
                         type: 'POST',
-                        data: {
-                            'action': 'count_up',
-                            'message_id': <?=$_GET['message_id']?>
-                        },
-                        success: (content) => {
-                            console.log('php success');
+                        data: json,
+                        success: ()=>{
+                            console.log('php success!');
                         }
                     });
-                }
+                });
+
+                $('#ansBtn').on('click', ()=>{
+                    let url = '<?=$protocol.$host."/insertAnswer.php"?>';
+                    let json = {
+                            'message_id': <?=$_GET['message_id']?>,
+                            'text': $('#honbun').val()
+                        };
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: json,
+                        success: ()=>{
+                            console.log('php success!');
+                            location.href ="<?=$protocol.$host.'/questions/'.$_GET['message_id']?>";
+                        }
+                    });
+                });
             });
         </script>
     </head>
@@ -47,7 +65,7 @@
             </div>
             <div class="question-body">
                 <p>
-                    <?=$post['message']?>
+                    <?=nl2br($post['message']??"");?>
                 </p>
                 <button style="border-radius: 10%" id="yyBtn">
                     <i class="material-icons">thumb_up_off_alt</i>
@@ -55,8 +73,24 @@
                 </button>
                 <a href="<?=$protocol.$host.'/main'?>">TOPへ</a>
             </div>
+            <div class="answer">
+                <?php if($answers->RowCount() > 0): ?>
+                    <ul>
+                        <?php foreach($answers as $answer): ?>
+                            <li class="post answer-box">
+                                <p class="username">
+                                    <img src="http://noobs.php.xdomain.jp/<?=$answer['picture']?>" width="30" height="30"></img>
+                                    <h2><?=$answer['name']?></h2>
+                                </p>
+                                <p><?=$answer['text']?></p>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
             <div>
-                <textarea rows="40" cols="40" placeholder="本文を入力してください"></textarea>
+                <textarea id="honbun" rows="40" cols="40" placeholder="本文を入力してください"></textarea>
+                <button id="ansBtn">回答する</button>
             </div>
         </div>
     </body>

@@ -12,8 +12,12 @@
         unset($_SESSION);
         exit(header('Location: login'));
     }
-
-    $posts = $db->query('SELECT m.name, p.* FROM members m, posts p WHERE m.id=p.created_by ORDER BY p.created DESC');//値がすでに決まってる
+    if(@$_POST["search"] != ""){ //IDおよびユーザー名の入力有無を確認
+        $posts = $db->query("SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.created_by AND p.title LIKE '%".$_POST["search"]."%'"); 
+    }else{
+        $posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.created_by ORDER BY p.created DESC');//値がすでに決まってる
+    }
+    
 
     function convert_to_fuzzy_time($time_db){
         $unix   = strtotime($time_db);
@@ -65,18 +69,24 @@
             <input type="submit" class="situmon" onclick="location.href='Question'" value="質問投稿">
         </header>
 
+        <p class = "loginid"><span>ユーザー名：<spam><?=htmlspecialchars($member['name'], ENT_QUOTES);?></p><!--ログイン名-->
 
         <section class="toukou">
             <h2>投稿一覧</h2>
+            <form action="" method="post">
+                <input type="text" name="search">
+                <input type="submit" name="submit" value="検索">
+            </form>
             <?php if ($posts->RowCount() > 0): ?>
                 <ul>
                     <?php foreach($posts as $post): ?>
                         <li class="post">
                             <a href="./questions/<?=$post['message_id']?>">
-                                <p class=title> 
+                                <center><h1><p class=title > 
                                     <?=nl2br(htmlspecialchars($post['title'], ENT_QUOTES));?>
-                                </p>
+                                </p></h1></center>
                                 <p class="Contributor">
+                                    <img src=http://noobs.php.xdomain.jp/<?=$post['picture']?> width="30" height="30">
                                     <?=htmlspecialchars($post['name'], ENT_QUOTES);?>  
                                     <?=htmlspecialchars(convert_to_fuzzy_time($post['created']));?>
                                 </p>

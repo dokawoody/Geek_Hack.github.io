@@ -1,0 +1,312 @@
+html{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    padding: 0;
+    margin: 0 30px;
+    font-family: Quicksand, 游ゴシック体, YuGothic, 'ヒラギノ角ゴシック Pro',メイリオ, Meiryo,'ＭＳ Ｐゴシック', sans-serif;
+    background-color: #f9ffdd;
+}
+.honbun {
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+.label{
+    vertical-align: top;
+    margin-right: 5px;
+}
+.toukou{
+    border-top: 1px solid;
+    margin: 120px auto;
+    max-width: 975px;
+}
+.situmon {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 23pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 20px 20px;   /* 余白       */
+  background    : #000066;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
+  border        : 2px solid #000066;    /* 枠の指定 */
+}
+
+.situmon:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #000066;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}
+    
+nav {
+    width: 584px;
+    float: left;
+}
+
+input.situmon{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.error{
+    color: red;
+    text-align: center;
+}
+
+ul{
+    list-style: none;
+}
+
+.post{
+    margin: 0;
+    padding: 0;
+}
+
+.post a{
+    color: black;
+    margin: 5px;
+    padding: 5px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #D4ECDD;
+    text-decoration: none;
+    transition: all 300ms 0s ease;
+}
+
+.post a:visited{
+    color: black;
+}
+
+.post a:hover{
+    width: 110%;
+    background-color: #ccc;
+}
+
+/*.logo {
+    overflow: hidden;
+    transform: translate(-100%, 0);
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+    color: #aa8f7b;
+    font-family: 'Josefin Sans', sans-serif;
+}*/
+.logo{
+    background-color:#eeff00;
+    color:#000000;
+    text-align:center;
+    width: 100%;
+    height: 50px;
+    border-top        : 5px solid #006611;
+    border-bottom        : 5px solid #006611;
+} 
+.logo span {
+    /*display: block;*/
+    transform: translate(100%, 0);
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
+}
+  
+.logo.-visible,
+.logo.-visible span {
+    transform: translate(0, 0);
+}
+
+.flex-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.flex-item{
+    height: 100vh;
+    display: block;
+}
+
+#line{
+    position: absolute;
+    display: block;
+    background-color: black;
+    width: 5px;
+    height: 100vh;
+    top: 0;
+    left: 50vw;
+}
+
+#line:hover{
+    cursor: col-resize;
+}
+
+textarea{
+    resize: vertical;
+    width:100px;
+    height:500px;
+    box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, .5);
+}
+
+
+.question-title{
+    border: solid;
+}
+
+.question-body{
+    border: solid;
+}
+
+
+
+#hea {
+    position:fixed;
+    z-index: 1;
+    background-image: url(./chick_sprout.png);
+    background-repeat: repeat;
+    background-position: 0px 50px;
+    width: 100%;
+    height: 112px;
+    margin: 0;
+    top: 0;
+    left: 0;
+    border-bottom: 5px solid #006611;
+    animation: bgiLoop 10s linear infinite;
+}
+
+@keyframes bgiLoop {
+    0% { background-position: 0 0;}
+  100% { background-position: -100px 200px;}
+}
+
+#hea>a{
+    width: 100%;
+    color: black;
+    text-decoration: none;
+    border-bottom: 5px solid #006611;
+}
+
+#hea>a:visited, #hea>a:hover{
+    color: black;
+}
+
+.base {
+    background-color: #eeeeee;
+    position: absolute;
+    top:100;
+    left:0;
+    right:0;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100vw;
+    float : left;
+}
+
+.backBtn{
+    background-color: white;
+    color: blak;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.backBtn:hover{
+    color: black;
+}
+
+.backBtn:visited{
+    color: black;
+}
+
+.backBtn::before{
+    content: "<";
+}
+
+.container{
+    width: 80%;
+    margin: 0 auto;
+    padding: 100px 0 0 0;
+}
+.boxwidth{
+    width: 100%;
+}
+
+.ttt{
+    color:blue
+}
+
+.nextReadBox {
+    position      : relative;                 /* relative指定は必須   */
+    overflow      : hidden;                   /* hidden指定は必須     */
+    transition    : .5s;                      /* 開閉の速度           */
+    height        : 80px;                    /* 閉じているときの高さ */
+    
+    background    : #fff;               /* 色や文字情報は変更ください */
+    line-height   : 1.3;
+    padding       : 5px 10px;
+    text-align    : left;
+    font-size     : 13pt;
+    font-weight   : bold;
+    border        : 3px solid #999;
+    border-radius : 8px;
+    max-width     : 400px;
+    margin        : auto;
+    }
+    
+    /* === チェックボックス ========================================== */
+    .nextReadBox > input {
+    display       : none;                                   /* 非表示 */
+    }
+    
+    /* === チェックボックスのlabel（＝ボタンに見せる） =============== */
+    .nextReadBox > label {
+    position      : absolute;
+    display       : inline-block;
+    box-sizing    : border-box;
+    cursor        : pointer;
+    
+    bottom        : 0;   /* 左右いっぱいのBOXにグラデーションを付ける */
+    left          : 0;
+    right         : 0;
+    height        : 60px;
+    background    : linear-gradient( rgba(255, 255, 255, 0.10),
+                                    #ffffff 65% );
+    
+    padding-top   : 40px;                   /* 下寄せに文字を配置する */
+    text-align    : center;
+    font-size     : 15px;
+    color         : #0059b3;
+    }
+    
+    /* === 開いているときのボタンサイズを変更 ======================== */
+    .nextReadBox > input[type="checkbox"]:checked + label {
+    background    : rgba(255, 255, 255, 0.60);
+    height        : 25px;
+    padding-top   : 5px;
+    font-size     : 12px;
+    }
+    
+    /* === ボタンに表示する文字（閉じているとき） ==================== */
+    .nextReadBox > input[type="checkbox"]:not(:checked) + label::after {
+    content       : "開く";
+    }
+    
+    /* === ボタンに表示する文字（開いているとき） ==================== */
+    .nextReadBox > input[type="checkbox"]:checked + label::after {
+    content       : "閉じる";
+    }
+
+    #bor {
+        position: relative;
+        top: 100px;
+        margin:50px auto;
+        width:500px;
+        height: 120%;
+        border:1px solid #666;
+        border-radius:20px;
+        background:#ffc;
+   }
+
+   .tyuou{
+    text-align: center;
+}
